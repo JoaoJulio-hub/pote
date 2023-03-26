@@ -1,96 +1,130 @@
-// Define an array to store the random numbers
-let numbers = []
-
-// Define an object to store the count of numbers in each range (0-9 ranges is actually 1-9 but to simplify the calculations it will stay this way)
-let counts = {
-  "0-9": 0,
-  "10-19": 0,
-  "20-29": 0,
-  "30-39": 0,
-  "40-49": 0,
-  "50-59": 0,
-  "60-69": 0,
-  "70-79": 0,
-  "80-89": 0,
-}
-
-// Generate one number from the first range
-let firstRangeNumber = randomInRange(1, 9)
-numbers.push(firstRangeNumber)
-counts[0 + "-" + 9]++
-
-// Generate one number from each other range first
-for (let rangeStart = 10; rangeStart <= 80; rangeStart += 10) {
-  let number = randomInRange(rangeStart, rangeStart + 9)
-  numbers.push(number)
-  counts[rangeStart + "-" + (rangeStart + 9)]++
-}
-
-// Generate the remaining random numbers
-let addedNumbers = 0
-while (numbers.length < 15) {
-  let number = randomInRange(1, 89)
-  let firstNumberOfTheRange = Math.floor(number / 10) * 10
-  let lastNumberOfTheRange = Math.floor(number / 10) * 10 + 9
-  let rangeOfTheNumber = firstNumberOfTheRange + "-" + lastNumberOfTheRange
-  if (!numbers.includes(number) && counts[rangeOfTheNumber] < 2) {
-    // Add the number to the array and increment the count for its range
-    numbers.push(number)
-    counts[rangeOfTheNumber]++
+export function generator() {
+  let line1 = new Array(9)
+  let line2 = new Array(9)
+  let line3 = new Array(9)
+  for (let i = 0; i < 9; i++) {
+    line1[i] = 0
+    line2[i] = 0
+    line3[i] = 0
   }
+
+  let numbers = [line1, line2, line3]
+
+  let numbersGenerated = []
+  // Define an object to store the count of numbers in each range (0-9 ranges is actually 1-9 but to simplify the calculations it will stay this way)
+  let counts = {
+    "0-9": 0,
+    "10-19": 0,
+    "20-29": 0,
+    "30-39": 0,
+    "40-49": 0,
+    "50-59": 0,
+    "60-69": 0,
+    "70-79": 0,
+    "80-89": 0,
+  }
+
+  let hasAllRanges = false
+  //Generate the numbers for each line in the array of lines
+  while (!hasAllRanges) {
+    for (let i = 0; i < numbers.length; i++) {
+      let countsPerLine = {
+        "0-9": 0,
+        "10-19": 0,
+        "20-29": 0,
+        "30-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 0,
+        "70-79": 0,
+        "80-89": 0,
+      }
+      for (let j = 0; j < 5; j++) {
+        let number = 0
+        let firstNumberOfTheRange = 0
+        let lastNumberOfTheRange = 0
+        let rangeOfTheNumber = ""
+        let keepRunning = 1
+        while (keepRunning == 1) {
+          number = randomInRange(1, 89)
+          firstNumberOfTheRange = Math.floor(number / 10) * 10
+          lastNumberOfTheRange = Math.floor(number / 10) * 10 + 9
+          rangeOfTheNumber = firstNumberOfTheRange + "-" + lastNumberOfTheRange
+          let numberWasGenerated = numbersGenerated.includes(number)
+          if (
+            numberWasGenerated ||
+            number == 0 ||
+            countsPerLine[rangeOfTheNumber] >= 1 ||
+            counts[rangeOfTheNumber] == 3
+          ) {
+          } else {
+            keepRunning = 0
+          }
+        }
+        if (number >= 0 && number <= 9) {
+          numbers[i][0] = number
+        } else if (number >= 10 && number <= 19) {
+          numbers[i][1] = number
+        } else if (number >= 20 && number <= 29) {
+          numbers[i][2] = number
+        } else if (number >= 30 && number <= 39) {
+          numbers[i][3] = number
+        } else if (number >= 40 && number <= 49) {
+          numbers[i][4] = number
+        } else if (number >= 50 && number <= 59) {
+          numbers[i][5] = number
+        } else if (number >= 60 && number <= 69) {
+          numbers[i][6] = number
+        } else if (number >= 70 && number <= 79) {
+          numbers[i][7] = number
+        } else if (number >= 80 && number <= 89) {
+          numbers[i][8] = number
+        }
+        numbersGenerated.push(number)
+        countsPerLine[rangeOfTheNumber]++
+        counts[rangeOfTheNumber]++
+      }
+    }
+
+    let numberOfRanges = 0
+    for (const key in counts) {
+      if (counts[key] > 0) {
+        numberOfRanges++
+      }
+    }
+
+    if (numberOfRanges == 9) {
+      hasAllRanges = true
+    } else {
+      //clean and rerun
+      line1 = new Array(9)
+      line2 = new Array(9)
+      line3 = new Array(9)
+      for (let i = 0; i < 9; i++) {
+        line1[i] = 0
+        line2[i] = 0
+        line3[i] = 0
+      }
+
+      numbers = [line1, line2, line3]
+      numbersGenerated = []
+      counts = {
+        "0-9": 0,
+        "10-19": 0,
+        "20-29": 0,
+        "30-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 0,
+        "70-79": 0,
+        "80-89": 0,
+      }
+    }
+  }
+  return numbers
 }
 
 // Define a function to generate a random number within a specified range
 function randomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
-
-// Initialize sub-arrays of each range
-const subArray1 = []
-const subArray2 = []
-const subArray3 = []
-const subArray4 = []
-const subArray5 = []
-const subArray6 = []
-const subArray7 = []
-const subArray8 = []
-const subArray9 = []
-
-// Iterate over original array and place each number into the appropriate sub-array based on its value range
-for (let i = 0; i < numbers.length; i++) {
-  const num = numbers[i]
-  if (num >= 1 && num <= 9) {
-    subArray1.push(num)
-  } else if (num >= 10 && num <= 19) {
-    subArray2.push(num)
-  } else if (num >= 20 && num <= 29) {
-    subArray3.push(num)
-  } else if (num >= 30 && num <= 39) {
-    subArray4.push(num)
-  } else if (num >= 40 && num <= 49) {
-    subArray5.push(num)
-  } else if (num >= 50 && num <= 59) {
-    subArray6.push(num)
-  } else if (num >= 60 && num <= 69) {
-    subArray7.push(num)
-  } else if (num >= 70 && num <= 79) {
-    subArray8.push(num)
-  } else if (num >= 80 && num <= 89) {
-    subArray9.push(num)
-  }
-}
-
-// Combine the sub-arrays into a new array
-const subArrays = [
-  subArray1,
-  subArray2,
-  subArray3,
-  subArray4,
-  subArray5,
-  subArray6,
-  subArray7,
-  subArray8,
-  subArray9,
-]
-
-console.log(subArrays)
