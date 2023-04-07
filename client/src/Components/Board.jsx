@@ -1,9 +1,8 @@
 import React from "react"
 import Square from "./Square"
-import { generator } from "./BoardNumbersGenerator"
 
-function Board() {
-  const boardWithNoSquares = generator()
+function Board({ board }) {
+  const boardWithNoSquares = board
   const boardWithSquares = boardWithNoSquares.map((squareNumbersArr) =>
     squareNumbersArr.map((square) => <Square number={square} />)
   )

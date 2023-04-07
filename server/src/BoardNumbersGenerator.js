@@ -1,4 +1,4 @@
-export function generator() {
+export function boardGenerator() {
   let line1 = new Array(9)
   let line2 = new Array(9)
   let line3 = new Array(9)
