@@ -13,7 +13,6 @@ import NavBar from "./Components/NavBar"
 import { useCookies } from "react-cookie"
 import JoinGame from "./pages/JoinGame"
 import CreateGame from "./pages/CreateGame"
-import Game from "./pages/Game"
 
 function App() {
   const [cookies] = useCookies(["access_token"])
@@ -29,7 +28,6 @@ function App() {
               <Route path="/mainmenu/creategame" element={<CreateGame />} />
               <Route path="/mainmenu/joingame" element={<JoinGame />} />
               <Route path="/*" element={<Navigate to="/mainmenu" />} />
-              <Route path="/room/:roomId" component={Game} />
             </>
           ) : (
             <>

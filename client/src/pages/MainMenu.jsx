@@ -10,6 +10,7 @@ function MainMenu() {
   const logout = () => {
     setCookies("access_token", "")
     window.localStorage.removeItem("userID")
+    window.localStorage.removeItem("username")
     navigate("/login")
   }
 

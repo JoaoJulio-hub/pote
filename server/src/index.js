@@ -9,9 +9,25 @@ import { boardGenerator } from "./BoardNumbersGenerator.js"
 import { scoreBoardGenerator } from "./GameNumbersGenerator.js"
 import http from "http"
 import { Server } from "socket.io"
+// Import the variables from config.js
+import config from "../../config.js"
 
 const app = express()
 const server = http.createServer(app)
+
+app.use(express.json())
+app.use(cors())
+
+mongoose.connect(
+  "mongodb+srv://joaodjulio:Galitos13@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority"
+)
+
+/**mongoose.connect(
+  `mongodb+srv://${encodeURIComponent(config.username)}:${encodeURIComponent(
+    config.password
+  )}@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority`,
+  { useNewUrlParser: true, useUnifiedTopology: true }
+)**/
 
 const io = new Server(server, {
   cors: {
@@ -23,22 +39,63 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`)
 
-  socket.on("join_room", async (data) => {
-    socket.join(data)
-    const clientsInRoom = io.sockets.adapter.rooms.size
-    if (clientsInRoom == 1) {
+  socket.on("join_room", (data) => {
+    const { room, userId } = data
+    socket.join(room)
+    /**if (clientsInRoom == 1) {
       const numbers = scoreBoardGenerator()
       const newGame = new GameModel({
-        roomId: data,
+        roomId: roomName,
         board: { numbers },
         index: 0,
       })
       await newGame.save()
-    }
+    }**/
     const boardGenerate = boardGenerator()
     console.log(boardGenerate)
-    socket.emit("send_board", boardGenerate)
-    console.log(`User with ID: ${socket.id} joined room: ${data}`)
+    socket.emit("send_board", { board: boardGenerate })
+    console.log(`User with ID: ${userId} joined room: ${room}`)
+  })
+
+  socket.on("start_game", async (data) => {
+    const { room } = data
+    const numbers = scoreBoardGenerator()
+    const newGame = new GameModel({
+      roomId: room,
+      board: { numbers },
+      index: 0,
+    })
+    await newGame.save()
+
+    io.to(room).emit("game_started")
+    const scoreBoard = scoreBoardGenerator()
+    let index = 0 // Variable to keep track of the current index in the scoreBoard array
+
+    // Define a function to handle the "foundWinner" event
+    const handleFoundWinner = () => {
+      clearInterval(intervalId) // Stop emitting events when "foundWinner" event is triggered
+    }
+
+    // Emit "send_number" event with numbers from scoreBoard in order, starting from the first index
+    const intervalId = setInterval(() => {
+      const randomNumber = scoreBoard[index] // Get the number from the scoreBoard using the current index
+      io.to(room).emit("send_number", { number: randomNumber })
+      index++ // Update the index to the next position
+
+      if (index === scoreBoard.length) {
+        clearInterval(intervalId) // Stop emitting when the last element is reached
+      }
+    }, 1000) // Change the interval time in milliseconds to adjust the frequency of emits
+  })
+
+  socket.on("line_winner", (data) => {
+    const { username, room } = data
+    io.to(room).emit("send_line_winner", { username: username })
+  })
+
+  socket.on("pote_winner", (data) => {
+    const { username, room } = data
+    io.to(room).emit("send_pote_winner", { username: username })
   })
 
   // socket.on("create_room", (data) => {
@@ -56,13 +113,6 @@ io.on("connection", (socket) => {
     console.log(`User Disconnected: ${socket.id}`)
   })
 })
-
-app.use(express.json())
-app.use(cors())
-
-mongoose.connect(
-  "mongodb+srv://joaodjulio:Galitos13@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority"
-)
 
 app.post("/register", async (req, res) => {
   const { firstName, lastName, username, email, password } = req.body

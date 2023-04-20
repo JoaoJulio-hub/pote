@@ -1,0 +1,10 @@
+.square.clicked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 141%;
+  height: 4px;
+  background-color: red;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
