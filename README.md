@@ -6,7 +6,7 @@ Still, you can test the game by following the next steps.
 
 ## Getting Started
 
-First, run the development server for the frontend:
+First, run the development server for the frontend and go to `http://localhost:5173/`:
 
 ```bash
 cd client
@@ -21,7 +21,7 @@ npm install
 npm start
 ```
 
-You can proceed once you see a message in the console that says "Server running on port 3001".
+You can proceed once you see a message in the console that says `Server running on port 3001`.
 
 ## Example
 
