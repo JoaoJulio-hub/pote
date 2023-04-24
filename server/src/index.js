@@ -19,7 +19,12 @@ app.use(cors())
 
 mongoose.connect(process.env.MONGODB_URL)
 
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin: "https://pote-eight.vercel.app/",
+    methods: ["GET", "POST"],
+  },
+})
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`)
