@@ -9,8 +9,7 @@ import { boardGenerator } from "./BoardNumbersGenerator.js"
 import { scoreBoardGenerator } from "./GameNumbersGenerator.js"
 import http from "http"
 import { Server } from "socket.io"
-// Import the variables from config.js
-import config from "../../config.js"
+import "dotenv/config"
 
 const app = express()
 const server = http.createServer(app)
@@ -18,9 +17,7 @@ const server = http.createServer(app)
 app.use(express.json())
 app.use(cors())
 
-mongoose.connect(
-  "mongodb+srv://joaodjulio:Galitos13@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority"
-)
+mongoose.connect(process.env.MONGODB_URL)
 
 const io = new Server(server, {
   cors: {
@@ -140,7 +137,7 @@ app.post("/login", async (req, res) => {
   res.json({ token, userID: user._id })
 })
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`)
