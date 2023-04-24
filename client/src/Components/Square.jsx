@@ -19,7 +19,7 @@ function Square({ number, onClick }) {
 
   return (
     <div
-      className={`${squareClassName} flex w-24 h-24 ml-0 border-2 border-black bg-green-700 justify-center items-center relative`}
+      className={`${squareClassName} flex w-14 h-23 ml-0 border-2 border-black bg-green-700 justify-center items-center relative`}
     >
       {number > 0 ? (
         <span onClick={handleClick} className="text-white">

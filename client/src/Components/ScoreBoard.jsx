@@ -20,13 +20,9 @@ function ScoreBoard() {
   }
 
   useEffect(() => {
-    socket.on(
-      "send_number",
-      (data) => {
-        setScoreBoard([...scoreBoard, data.number])
-      },
-      [scoreBoard]
-    )
+    socket.on("send_number", (data) => {
+      setScoreBoard([...scoreBoard, data.number])
+    })
 
     // Clean up the event listener when component unmounts
     return () => {

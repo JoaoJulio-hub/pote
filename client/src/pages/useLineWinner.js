@@ -1,23 +1,19 @@
-import { useEffect, useState } from "react"
+// custom hook for receiving the line winner from the server
+import { useEffect } from "react"
 import socket from "../socket.js"
 
-function useLineWinner() {
-  const [lineWinner, setLineWinner] = useState("") // Move the useState hook to the top level
-
+function useLineWinner(setLineWinner) {
   useEffect(() => {
     socket.on("send_line_winner", (data) => {
       const { username } = data
       setLineWinner(username)
     })
 
-    // Clean up the event listener when component unmounts
+    // Clean up the event listeners on unmount
     return () => {
       socket.off("send_line_winner")
     }
-  }, [])
-
-  // Return the poteWinner state and any other logic or functions you need
-  return lineWinner
+  }, [socket])
 }
 
 export default useLineWinner

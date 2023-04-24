@@ -1,15 +1,16 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Square from "./Square"
 import { v4 as uuidv4 } from "uuid"
 import socket from "../socket.js"
 import useNumberReceiver from "../pages/useNumberReceiver"
+import LastNumbers from "./LastNumbers"
 
 function Board({ board, room, username }) {
   const [scoreBoard, setScoreBoard] = useState([])
   useNumberReceiver(scoreBoard, setScoreBoard) // Call the custom hook with the setScoreBoard function to update state
 
   const [start, setStart] = useState(false)
-  const [clickedSquares, setClickedSquares] = useState([])
+  const [clickedSquares, setClickedSquares] = useState([0])
   const [boardWithSquares, setBoardWithSquares] = useState(
     board.map((squareNumbersArr) =>
       squareNumbersArr.map((square) => (
@@ -17,22 +18,25 @@ function Board({ board, room, username }) {
           key={uuidv4()}
           number={square}
           onClick={(clickedSquare) => {
-            setClickedSquares([...clickedSquares, clickedSquare])
+            setClickedSquares((prevClickedSquares) => [
+              ...prevClickedSquares,
+              clickedSquare,
+            ])
           }}
         />
       ))
     )
   )
 
+  useEffect(() => {
+    socket.on("game_started", (data) => {
+      setStart(true)
+    })
+  }, [start])
+
   function areSquaresClickedInLine(lineIndex) {
     const lineSquares = board[lineIndex]
-    for (let i = 0; i < lineSquares.length; i++) {
-      const square = lineSquares[i]
-      if (!clickedSquares.includes(square)) {
-        return false
-      }
-    }
-    return true
+    return lineSquares.every((square) => clickedSquares.includes(square))
   }
 
   const startGame = () => {
@@ -49,18 +53,20 @@ function Board({ board, room, username }) {
     if (found) {
       socket.emit("line_winner", { username: username, room: room })
     }
+    console.log(found)
   }
 
   const hasPote = () => {
-    if (clickedSquares.length === 15) {
+    if (clickedSquares.length === 16) {
       socket.emit("pote_winner", { username: username, room: room })
     }
   }
 
   return (
-    <div className="flex-col">
-      <div className="flex flex-wrap">
-        <div className="flex-grow-1 max-w-1/9 border-2 border-black">
+    <div className="flex flex-col">
+      <LastNumbers />
+      <div className="flex flex-wrap max-h-80 max-w-80 mt-10">
+        <div className="basis-auto flex-grow-1 max-w-1/9 border-2 border-black">
           <div className="grid grid-cols-9 gap-0">{boardWithSquares}</div>
         </div>
       </div>

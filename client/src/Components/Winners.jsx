@@ -1,18 +1,18 @@
 import React, { useState } from "react"
-import useLineWinner from "../pages/useLineWinner"
 import usePoteWinner from "../pages/usePoteWinner"
-usePoteWinner
+import useLineWinner from "../pages/useLineWinner"
 
 function Winners() {
-  const [lineW, setLineW] = useState("")
-  const [poteW, setPoteW] = useState("")
-  setLineW(useLineWinner())
-  setPoteW(usePoteWinner())
+  const [poteWinner, setPoteWinner] = useState("")
+  const [lineWinner, setLineWinner] = useState("")
+
+  useLineWinner(setLineWinner)
+  usePoteWinner(setPoteWinner)
 
   return (
-    <div className="flex flex-col">
-      <h2 className="text-2xl font-bold mb-4">Line Winner: {lineW}</h2>
-      <h2 className="text-2xl font-bold">Bingo Winner: {poteW}</h2>
+    <div>
+      <h2>Line Winner: {lineWinner}</h2>
+      <h2>Bingo Winner: {poteWinner}</h2>
     </div>
   )
 }

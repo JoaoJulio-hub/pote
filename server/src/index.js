@@ -22,13 +22,6 @@ mongoose.connect(
   "mongodb+srv://joaodjulio:Galitos13@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority"
 )
 
-/**mongoose.connect(
-  `mongodb+srv://${encodeURIComponent(config.username)}:${encodeURIComponent(
-    config.password
-  )}@potecluster.57nsofu.mongodb.net/potecluster?retryWrites=true&w=majority`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-)**/
-
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -42,15 +35,6 @@ io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     const { room, userId } = data
     socket.join(room)
-    /**if (clientsInRoom == 1) {
-      const numbers = scoreBoardGenerator()
-      const newGame = new GameModel({
-        roomId: roomName,
-        board: { numbers },
-        index: 0,
-      })
-      await newGame.save()
-    }**/
     const boardGenerate = boardGenerator()
     console.log(boardGenerate)
     socket.emit("send_board", { board: boardGenerate })
@@ -85,7 +69,7 @@ io.on("connection", (socket) => {
       if (index === scoreBoard.length) {
         clearInterval(intervalId) // Stop emitting when the last element is reached
       }
-    }, 1000) // Change the interval time in milliseconds to adjust the frequency of emits
+    }, 1500) // Change the interval time in milliseconds to adjust the frequency of emits
   })
 
   socket.on("line_winner", (data) => {
