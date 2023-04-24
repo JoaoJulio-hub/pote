@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const io = new Server(server, {
   cors: {
-    origin: "https://pote-eight.vercel.app/",
+    origin: "http://localhost:3001/",
     methods: ["GET", "POST"],
   },
 })
@@ -78,12 +78,6 @@ io.on("connection", (socket) => {
     const { username, room } = data
     io.to(room).emit("send_pote_winner", { username: username })
   })
-
-  // socket.on("create_room", (data) => {
-  //   socket.join(data)
-  //   console.log(`User with ID: ${socket.id} joined room: ${data}`)
-  //   socket.emit("send_board", { board: generator() })
-  // })
 
   socket.on("leave_room", (data) => {
     socket.leave(data.room, data.id)
