@@ -35,12 +35,12 @@ function Login() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-purple-600">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-300">
       <div className="flex mb-10 text-5xl mb-6 cursor-pointer text-white items-center">
-        <span>P</span>
+        <span className="text-black">P</span>
         <FiberManualRecordIcon className="text-yellow-400 !h-12 !w-12 mt-2" />
 
-        <span>T</span>
+        <span className="text-black">T</span>
         <EuroIcon className="text-green-400 !h-11 !w-11 mt-1" />
       </div>
       <form
@@ -54,7 +54,7 @@ function Login() {
         </label>
         <input
           type="text"
-          className="p-3 border-solid border-2 border-purple-600
+          className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
           onChange={(e) => {
             setUsernameOrEmail(e.target.value)
@@ -67,18 +67,18 @@ function Login() {
         </label>
         <input
           type="password"
-          className="p-3 border-solid border-2 border-purple-600 rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200"
+          className="p-3 border-solid border-2 border-green-600 rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200"
           id="password"
           onChange={(e) => {
             setPassword(e.target.value)
           }}
           value={password}
         />
-        <button className="mt-5 p-2 bg-purple-600 hover:bg-purple-500 text-white min-w-full rounded-lg">
+        <button className="mt-5 p-2 bg-green-600 hover:bg-green-500 text-white min-w-full rounded-lg">
           Login
         </button>
 
-        <span className="text-purple-700">Forgot my password</span>
+        <span className="text-green-700">Forgot my password</span>
       </form>
     </div>
   )

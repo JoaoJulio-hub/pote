@@ -35,12 +35,12 @@ function SignUp() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-purple-600">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-300">
       <div className="flex mb-10 text-5xl mb-6 cursor-pointer text-white items-center">
-        <span className="text-white">P</span>
+        <span className="text-black">P</span>
         <FiberManualRecordIcon className="text-yellow-400 !h-12 !w-12 mt-2" />
 
-        <span className="text-white">T</span>
+        <span className="text-black">T</span>
         <EuroIcon className="text-green-400 !h-11 !w-11 mt-1" />
       </div>
       <form
@@ -53,7 +53,7 @@ function SignUp() {
           <input
             type="text"
             placeholder="First Name"
-            className="p-3 border-solid border-2 border-purple-600
+            className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
             id="firstname"
             onChange={(e) => {
@@ -65,7 +65,7 @@ function SignUp() {
           <input
             type="text"
             placeholder="Last Name"
-            className="p-3 border-solid border-2 border-purple-600
+            className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
             id="lastname"
             onChange={(e) => {
@@ -79,7 +79,7 @@ function SignUp() {
           <input
             type="text"
             placeholder="Username"
-            className="p-3 border-solid border-2 border-purple-600
+            className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
             id="username"
             onChange={(e) => {
@@ -91,7 +91,7 @@ function SignUp() {
           <input
             type="text"
             placeholder="Email"
-            className="p-3 border-solid border-2 border-purple-600
+            className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
             id="email"
             onChange={(e) => {
@@ -105,7 +105,7 @@ function SignUp() {
           <input
             type="password"
             placeholder="Password"
-            className="p-3 border-solid border-2 border-purple-600
+            className="p-3 border-solid border-2 border-green-600
           rounded-lg outline-none focus:bg-slate-200 hover:bg-slate-200 m-2"
             onChange={(e) => {
               setPassword(e.target.value)
@@ -115,7 +115,7 @@ function SignUp() {
           />
         </div>
 
-        <button className="mt-5 p-2 bg-purple-600 hover:bg-purple-500  text-white w-32 rounded-lg">
+        <button className="mt-5 p-2 bg-green-600 hover:bg-green-500  text-white w-32 rounded-lg">
           Sign Up
         </button>
       </form>

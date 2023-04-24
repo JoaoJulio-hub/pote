@@ -2,16 +2,18 @@
 import { useEffect } from "react"
 import socket from "../socket.js"
 
-function usePoteWinner(setPoteWinner) {
+function usePoteWinner(poteWinner, setPoteWinner) {
   useEffect(() => {
-    socket.on("send_pote_winner", (data) => {
-      const { username } = data
-      setPoteWinner(username)
-    })
+    if (poteWinner != "") {
+      socket.on("send_pote_winner", (data) => {
+        const { username } = data
+        setPoteWinner(username)
+      })
 
-    // Clean up the event listeners on unmount
-    return () => {
-      socket.off("send_pote_winner")
+      // Clean up the event listeners on unmount
+      return () => {
+        socket.off("send_pote_winner")
+      }
     }
   }, [socket])
 }

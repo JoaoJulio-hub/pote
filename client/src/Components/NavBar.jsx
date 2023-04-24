@@ -6,7 +6,7 @@ function NavBar() {
   const [cookies, setCookies] = useCookies(["access_token"])
 
   return (
-    <div className="bg-gray-900 text-white py-4 px-6 flex justify-center items-center">
+    <div className="bg-green-900 text-white py-4 px-6 flex justify-center items-center">
       <Link className="mr-6" to="/">
         Home
       </Link>

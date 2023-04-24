@@ -6,8 +6,8 @@ function Winners() {
   const [poteWinner, setPoteWinner] = useState("")
   const [lineWinner, setLineWinner] = useState("")
 
-  useLineWinner(setLineWinner)
-  usePoteWinner(setPoteWinner)
+  useLineWinner(lineWinner, setLineWinner)
+  usePoteWinner(poteWinner, setPoteWinner)
 
   return (
     <div>

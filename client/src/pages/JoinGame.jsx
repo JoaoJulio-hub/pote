@@ -1,16 +1,27 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import Board from "../Components/Board.jsx"
 import ScoreBoard from "../Components/ScoreBoard.jsx"
 import Winners from "../Components/Winners.jsx"
 import socket from "../socket.js"
+import { useCookies } from "react-cookie"
 
-// Connect to the Socket.IO server
 const username = localStorage.getItem("username")
 
 function JoinGame() {
+  const navigate = useNavigate()
+  const [cookies, setCookies] = useCookies(["access_token"])
+
   const [room, setRoom] = useState("")
   const [showGame, setShowGame] = useState(false)
   const [boardGame, setBoardGame] = useState([])
+
+  const logout = () => {
+    setCookies("access_token", "")
+    window.localStorage.removeItem("userID")
+    window.localStorage.removeItem("username")
+    navigate("/login")
+  }
 
   const joinRoom = async () => {
     if (room !== "") {
@@ -38,29 +49,37 @@ function JoinGame() {
   return (
     <div>
       {!showGame ? (
-        <div className="flex flex-col items-center justify-center mt-8 min-h-screen">
-          <h4 className="text-lg font-bold mb-4">Join Game</h4>
-          <input
-            className="border border-gray-400 rounded px-3 py-2 mb-4"
-            type="text"
-            placeholder="Name of the room"
-            value={room}
-            onChange={(e) => {
-              setRoom(e.target.value)
-            }}
-          />
+        <div>
           <button
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            onClick={joinRoom}
+            onClick={logout}
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-l-lg"
           >
-            Join Room
+            Logout
           </button>
+          <div className="flex flex-col items-center justify-center mt-8 min-h-screen">
+            <h4 className="text-lg font-bold mb-4">Join Game</h4>
+            <input
+              className="border border-gray-400 rounded px-3 py-2 mb-4"
+              type="text"
+              placeholder="Name of the room"
+              value={room}
+              onChange={(e) => {
+                setRoom(e.target.value)
+              }}
+            />
+            <button
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              onClick={joinRoom}
+            >
+              Join Room
+            </button>
+          </div>
         </div>
       ) : (
         <div className="bg-gray-200">
           <div className="flex p-4 justify-start">
             <button
-              className="bg-blue-900 text-white px-4 py-2 rounded h-fit"
+              className="bg-red-900 text-white px-4 py-2 rounded h-fit"
               onClick={leaveRoom}
             >
               Leave room
