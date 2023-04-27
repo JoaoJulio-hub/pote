@@ -52,7 +52,7 @@ function JoinGame() {
         <div>
           <button
             onClick={logout}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-l-lg"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold rounded-lg m-2 py-2 px-4"
           >
             Logout
           </button>

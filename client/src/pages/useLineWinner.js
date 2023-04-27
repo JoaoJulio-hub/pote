@@ -1,10 +1,10 @@
-// custom hook for receiving the line winner from the server
 import { useEffect } from "react"
 import socket from "../socket.js"
 
 function useLineWinner(lineWinner, setLineWinner) {
   useEffect(() => {
-    if (lineWinner != "") {
+    if (lineWinner === "") {
+      // check if lineWinner is an empty string
       socket.on("send_line_winner", (data) => {
         const { username } = data
         setLineWinner(username)
@@ -15,7 +15,7 @@ function useLineWinner(lineWinner, setLineWinner) {
         socket.off("send_line_winner")
       }
     }
-  }, [socket])
+  }, [lineWinner, setLineWinner, socket]) // pass lineWinner and setLineWinner as dependencies
 }
 
 export default useLineWinner

@@ -35,7 +35,7 @@ function SignUp() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-300">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-200">
       <div className="flex mb-10 text-5xl mb-6 cursor-pointer text-white items-center">
         <span className="text-black">P</span>
         <FiberManualRecordIcon className="text-yellow-400 !h-12 !w-12 mt-2" />

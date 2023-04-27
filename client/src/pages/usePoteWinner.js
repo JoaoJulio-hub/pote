@@ -1,10 +1,10 @@
-// custom hook for receiving the pote winner from the server
 import { useEffect } from "react"
 import socket from "../socket.js"
 
 function usePoteWinner(poteWinner, setPoteWinner) {
   useEffect(() => {
-    if (poteWinner != "") {
+    if (poteWinner === "") {
+      // check if poteWinner is an empty string
       socket.on("send_pote_winner", (data) => {
         const { username } = data
         setPoteWinner(username)
@@ -15,7 +15,7 @@ function usePoteWinner(poteWinner, setPoteWinner) {
         socket.off("send_pote_winner")
       }
     }
-  }, [socket])
+  }, [poteWinner, setPoteWinner, socket]) // pass poteWinner and setPoteWinner as dependencies
 }
 
 export default usePoteWinner

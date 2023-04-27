@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001/",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 })
@@ -41,12 +41,12 @@ io.on("connection", (socket) => {
   socket.on("start_game", async (data) => {
     const { room } = data
     const numbers = scoreBoardGenerator()
-    const newGame = new GameModel({
+    /*const newGame = new GameModel({
       roomId: room,
       board: { numbers },
       index: 0,
     })
-    await newGame.save()
+    await newGame.save()*/
 
     io.to(room).emit("game_started")
     const scoreBoard = scoreBoardGenerator()
@@ -66,7 +66,7 @@ io.on("connection", (socket) => {
       if (index === scoreBoard.length) {
         clearInterval(intervalId) // Stop emitting when the last element is reached
       }
-    }, 1500) // Change the interval time in milliseconds to adjust the frequency of emits
+    }, 2000) // Change the interval time in milliseconds to adjust the frequency of emits
   })
 
   socket.on("line_winner", (data) => {
