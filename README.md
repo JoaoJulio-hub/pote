@@ -26,5 +26,6 @@ You can proceed once you see a message in the console that says `Server running 
 ## Example
 
 This how you can setup the app in your enviroment and how can play a game:
-<iframe width="560" height="315" src="https://youtu.be/-gPadRSxNVo" frameborder="0" allowfullscreen></iframe>
+
+[![Alt text](https://img.youtube.com/vi/-gPadRSxNVo/0.jpg)](https://www.youtube.com/watch?v=-gPadRSxNVo)
 
